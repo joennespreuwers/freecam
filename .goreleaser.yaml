@@ -31,6 +31,31 @@ archives:
 checksum:
   name_template: "checksums.txt"
 
+release:
+  name_template: "freecam {{.Tag}} — Camera Liberation"
+  header: |
+    ## freecam {{.Tag}}
+
+    **Free your PTP camera from macOS.**
+
+    macOS's `ptpcamera` daemon silently grabs exclusive USB access to any PTP camera
+    (Canon, Nikon, Sony, Fujifilm, Olympus, and more), locking out Darktable, digiKam,
+    Lightroom, and every other third-party tool. freecam watches for the daemon and
+    kills it on sight — keeping your camera available to the software you actually want.
+
+    ### Install via Homebrew
+    ```sh
+    brew install joennespreuwers/tap/freecam
+    ```
+
+    ### Or download below
+    Pick the binary for your Mac:
+    - `freecam_*_darwin_arm64.tar.gz` — Apple Silicon (M1/M2/M3/M4)
+    - `freecam_*_darwin_amd64.tar.gz` — Intel Mac
+  footer: |
+    ---
+    **Full Changelog**: https://github.com/joennespreuwers/freecam/commits/{{.Tag}}
+
 brews:
   - name: freecam
     repository:
