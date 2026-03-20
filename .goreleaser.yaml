@@ -1,0 +1,46 @@
+version: 2
+
+project_name: freecam
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: freecam
+    main: ./cmd/freecam
+    binary: freecam
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+archives:
+  - id: default
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format: tar.gz
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "checksums.txt"
+
+brews:
+  - name: freecam
+    repository:
+      owner: joennespreuwers
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    homepage: "https://github.com/joennespreuwers/freecam"
+    description: "Free your PTP camera (Canon, Nikon, Sony, Fujifilm, Olympus…) from macOS ptpcamera daemon"
+    license: "MIT"
+    install: |
+      bin.install "freecam"
+    test: |
+      system "#{bin}/freecam --version"
